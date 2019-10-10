@@ -1,0 +1,27 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Chrome 调试",
+			"type": "chrome",
+			"request": "launch",
+			"url": "localhost:3030",
+			"windows": {
+				// "runtimeExecutable": "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe"
+			},
+			"osx": {
+				"runtimeExecutable": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+			},
+			"linux": {
+				"runtimeExecutable": "/usr/sbin/google-chrome-stable"
+			},
+			"runtimeArgs": [
+				"--new-window",
+				"--disk-cache-size=1",
+			],
+			"sourceMaps": true,
+			"webRoot": "${workspaceRoot}",
+			"disableNetworkCache": true
+		}
+	]
+}
