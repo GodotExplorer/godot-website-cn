@@ -22,3 +22,41 @@ declare namespace model {
 	}
 }
 
+declare namespace API {
+
+	interface VerifyCodeRequestParam {
+		/** 请求验证的邮箱地址 */
+		email?: string;
+		/** 请求验证的手机号 */
+		mobile_phone?: string;
+	}
+
+	/** 用户注册参数 */
+	interface SignupParam {
+		name: string;
+		password: string;
+		email?: string;
+		mobile_phone?: string;
+		verify_code: string;
+	}
+
+	interface SigninParam {
+		name?: string;
+		email?: string;
+		mobile_phone?: string;
+		password: string;
+	}
+
+	/** 用户登陆凭证 */
+	interface LoginToken {
+		id: string;
+		name: string;
+		token: string;
+	}
+
+	interface JWTPayload {
+		expire: number,
+		data: { id: string, name: string}
+	}
+
+}

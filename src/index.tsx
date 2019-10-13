@@ -4,6 +4,10 @@ import { Router, Route, Switch} from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import Home from './views/pages/Home';
 import NotFound from './views/pages/NotFound';
+import server from 'server/server';
+if (window['server']) {
+	window['server'] = server;
+}
 
 const history = createBrowserHistory();
 
