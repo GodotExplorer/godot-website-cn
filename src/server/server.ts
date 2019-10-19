@@ -1,5 +1,5 @@
 import { EventDispatcher } from "events/EventDispatcher";
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import * as base64url from "base64-url";
 
 const USER_TOKEN_STORAGE_NAME = 'user_token';
@@ -10,6 +10,7 @@ enum SupportedAPI {
 	USER_SIGNIN = '/v1/user/signin',
 	USER_GET_INFO = '/v1/user/:id',
 	USER_RESET_PASSWORD = '/v1/user/reset_password',
+	FILES_UPLOAD = '/v1/files/upload',
 }
 
 export class Server extends EventDispatcher {
@@ -47,9 +48,9 @@ export class Server extends EventDispatcher {
 	}
 
 	/** 发起 POST 请求 */
-	private async post(api: SupportedAPI | string, params?: any) {
+	private async post(api: SupportedAPI | string, params?: any, config?: AxiosRequestConfig) {
 		try {
-			const ret = await axios.post(`${this.api_url}${api}`, params, );
+			const ret = await axios.post(`${this.api_url}${api}`, params, config);
 			return ret.data || ret;
 		} catch (error) {
 			if (error && error.response) {
@@ -61,10 +62,10 @@ export class Server extends EventDispatcher {
 	}
 
 	/** 发起 GET 请求 */
-	private async get(api: SupportedAPI | string, params?: object) {
+	private async get(api: SupportedAPI | string, params?: object, config?: AxiosRequestConfig) {
 		try {
 			let url: string = `${this.api_url}${api}`;
-			const ret = await axios.get(url);
+			const ret = await axios.get(url, config);
 			return ret.data || ret;
 		} catch (error) {
 			if (error && error.response) {
@@ -101,6 +102,16 @@ export class Server extends EventDispatcher {
 		const token: API.LoginToken = await this.post(SupportedAPI.USER_RESET_PASSWORD, params);
 		this.token = token;
 		return token;
+	}
+
+	/** 上传文件 */
+	async upload_file(file: File) {
+		const formData = new FormData();
+		formData.append(file.name, file);
+		const config = {
+			headers: { 'content-type': 'multipart/form-data' }
+		};
+		await this.post(SupportedAPI.FILES_UPLOAD, formData, config);
 	}
 };
 
