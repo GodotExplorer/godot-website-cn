@@ -4,6 +4,7 @@ const workSpaceDir = path.resolve(__dirname);
 
 module.exports = (env) => {
 	if (!env) { env = {production: false};}
+
 	console.log("Compile config:", env);
 	return ({
 		entry: path.join(workSpaceDir, 'src/index.tsx'),
@@ -13,7 +14,9 @@ module.exports = (env) => {
 		},
 		module: {
 			rules: [
-				{ test: /\.tsx?$/, use: 'ts-loader', exclude: /node_modules/ }
+				{test:/\.css$/,use:["style-loader","css-loader"]},
+				{ test: /\.tsx?$/, use: 'ts-loader', exclude: /node_modules/ },
+				
 			]
 		},
 		resolve: {
