@@ -12,7 +12,7 @@ export default class Home extends React.Component<Home.Props, Home.State> {
 	render() {
 		return (
 			<div>
-				Home Page
+				<img src="assets/images/logo.svg" alt=""/>
 			</div>
 		);
 	}
