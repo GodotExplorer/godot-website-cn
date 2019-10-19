@@ -7,3 +7,4 @@ dist/js
 dist/assets
 yarn.lock
 thirdpart
+package-lock.json
