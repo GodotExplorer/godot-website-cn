@@ -19,6 +19,8 @@ declare namespace model {
 		nick: string;
 		/** 头像 */
 		avatar: string;
+		/** 简介 */
+		description: string;
 	}
 }
 
@@ -45,6 +47,13 @@ declare namespace API {
 		email?: string;
 		mobile_phone?: string;
 		password: string;
+	}
+
+	interface ResetPasswordParam {
+		email?: string;
+		mobile_phone?: string;
+		password: string;
+		verify_code: string;
 	}
 
 	/** 用户登陆凭证 */

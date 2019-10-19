@@ -8,7 +8,8 @@ enum SupportedAPI {
 	REQUEST_VERIFY_CODE = '/v1/verify_code/request',
 	USER_SIGNUP = '/v1/user/signup',
 	USER_SIGNIN = '/v1/user/signin',
-	USET_GET_INFO = '/v1/user/:id',
+	USER_GET_INFO = '/v1/user/:id',
+	USER_RESET_PASSWORD = '/v1/user/reset_password',
 }
 
 export class Server extends EventDispatcher {
@@ -45,6 +46,7 @@ export class Server extends EventDispatcher {
 		return await this.post(SupportedAPI.REQUEST_VERIFY_CODE, params);
 	}
 
+	/** 发起 POST 请求 */
 	private async post(api: SupportedAPI | string, params?: any) {
 		try {
 			const ret = await axios.post(`${this.api_url}${api}`, params, );
@@ -52,10 +54,13 @@ export class Server extends EventDispatcher {
 		} catch (error) {
 			if (error && error.response) {
 				throw error.response.data || error.response;
+			} else {
+				throw error;
 			}
 		}
 	}
 
+	/** 发起 GET 请求 */
 	private async get(api: SupportedAPI | string, params?: object) {
 		try {
 			let url: string = `${this.api_url}${api}`;
@@ -64,6 +69,8 @@ export class Server extends EventDispatcher {
 		} catch (error) {
 			if (error && error.response) {
 				throw error.response.data || error.response;
+			} else {
+				throw error;
 			}
 		}
 	}
@@ -85,8 +92,15 @@ export class Server extends EventDispatcher {
 
 	/** 获取用户信息 */
 	async get_user_info(id: string) {
-		const d = await this.get(SupportedAPI.USET_GET_INFO.replace(':id', id));
+		const d: model.User = await this.get(SupportedAPI.USER_GET_INFO.replace(':id', id));
 		return d;
+	}
+
+	/** 重置密码,完成后自动登陆 */
+	async reset_password(params: API.ResetPasswordParam) {
+		const token: API.LoginToken = await this.post(SupportedAPI.USER_RESET_PASSWORD, params);
+		this.token = token;
+		return token;
 	}
 };
 
