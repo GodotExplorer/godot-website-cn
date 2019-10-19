@@ -4,4 +4,7 @@ node_modules
 *.log*
 build
 dist/js
+dist/assets
 yarn.lock
+thirdpart
+package-lock.json

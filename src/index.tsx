@@ -6,6 +6,10 @@ import Home from './views/pages/Home';
 import NotFound from './views/pages/NotFound';
 import Test from 'views/pages/Test';
 
+import server from 'server/server';
+if (!window['server']) {
+	window['server'] = server;
+}
 
 const history = createBrowserHistory();
 
