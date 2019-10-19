@@ -1,5 +1,5 @@
 import * as React from 'react';
-
+import { Button } from 'antd';
 export namespace Home {
 	export interface Props extends React.Props < void > {
 	}
