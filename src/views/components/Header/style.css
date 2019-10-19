@@ -1,0 +1,128 @@
+header{
+    width:100vw;
+    height:64px;
+    background-color:white;
+    display:flex;
+    align-items: center;
+    z-index:100;
+    position:fixed;
+    top:0;
+    font-size: 20px;
+    font-weight: bold;
+}
+header .container{
+    display:flex;
+    max-width: 1200px;
+    align-items: center;
+    width:100%;
+    overflow:initial;
+    margin:auto;
+}
+#nav_toggle_cb{
+    display:none;
+}
+#nav_head{
+    margin-top:8px;
+    margin-bottom:8px;
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+}
+
+.nav-logo{
+    height:48px;
+}
+#nav_toggle_btn{
+    display:none;
+}
+header #nav{
+    width:100%;
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+
+}
+header .left{
+    display:flex;
+    list-style:none;
+    margin:0px;
+    padding-left:0px;
+    text-rendering:optimizeLegibility;
+    line-height: 1.5;
+}
+header .right{
+    display:flex;
+    height:100%;
+    list-style: none;
+    margin:0px;
+    padding-left:0px;
+    text-rendering: optimizeLegibility;
+    line-height: 1.5;
+}
+
+header nav>ul>:first-child{
+    padding-left:20px;
+}
+header nav>ul>li{
+    padding-right:16px;
+    margin-bottom:0px;
+}
+header li{
+    display:list-item;
+    text-align:-webkit-match-parent;
+}
+header nav ul{
+    align-items: center;
+}
+header a{
+    text-decoration-line:none;
+}
+header a:any-link{
+    color:black;
+}
+header a:hover{
+    color:red;
+}
+
+@media screen and (max-width:1200px){
+    header{
+        height:auto;
+    }
+    header .container{
+        padding-left:16px;
+        padding-right:16px;
+        flex-direction: column;
+    }
+    header #nav_toggle_btn{
+        display:block;
+    }
+    header #nav_head{
+        width:100%;
+    }
+    header #nav{
+        display:none;
+    }
+    header #nav_toggle_cb:checked ~nav{
+        display:block;
+    }
+    header nav>ul{
+        margin-bottom: 16px;
+        margin-top:16px;
+    }
+    header nav ul{
+        align-items:flex-start;
+        flex-direction: column;
+        height:auto;
+    }
+    header nav>ul>:first-child{
+        padding-left:0px;
+    }
+    header nav ul>li{
+        padding:0;
+        padding-top:16px;
+        width:100%;
+    }
+    #asset_lib::after{
+        content: " 资源";
+    }
+}
