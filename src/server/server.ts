@@ -11,6 +11,7 @@ enum SupportedAPI {
 	USER_GET_INFO = '/v1/user/:id',
 	USER_RESET_PASSWORD = '/v1/user/reset_password',
 	FILES_UPLOAD = '/v1/files/upload',
+	FILES_GET = '/v1/files/get',
 }
 
 export class Server extends EventDispatcher {
@@ -104,14 +105,33 @@ export class Server extends EventDispatcher {
 		return token;
 	}
 
-	/** 上传文件 */
-	async upload_file(file: File) {
-		const formData = new FormData();
-		formData.append(file.name, file);
+	/**
+	 * 上传文件
+	 *
+	 * @param {File} file 文件对象
+	 * @param {boolean} [is_public=false] 是否所有人对该上传的文件具有访问权限
+	 * @param {{[key: string]: string}} [params] 附加参数
+	 * @returns {string[]} 返回服务器存储后的路径列表
+	 * @memberof Server
+	 */
+	async upload_file(file: File, is_public: boolean = false, params?: {[key: string]: string}) {
+		const form = new FormData();
+		form.append(file.name, file);
+		params = params || {};
+		if (is_public) params.public = 'true';
+		for (const key in params) {
+			form.append(key, params[key]);
+		}
 		const config = {
 			headers: { 'content-type': 'multipart/form-data' }
 		};
-		await this.post(SupportedAPI.FILES_UPLOAD, formData, config);
+		return await this.post(SupportedAPI.FILES_UPLOAD, form, config) as string[];
+	}
+
+	/** 通过服务器文件路径获取访问 URL */
+	get_file_url(path: string) {
+		let token = this.token ? `&token=${this.token.token}` : '';
+		return `${SupportedAPI.FILES_GET}?path=${path}${token}`;
 	}
 };
 
