@@ -10,6 +10,7 @@ enum SupportedAPI {
 	USER_SIGNIN = '/v1/user/signin',
 	USER_GET_INFO = '/v1/user/:id',
 	USER_RESET_PASSWORD = '/v1/user/reset_password',
+	USER_SET_PROFILE = '/v1/user/profile/:id',
 	FILES_UPLOAD = '/v1/files/upload',
 	FILES_GET = '/v1/files/get',
 }
@@ -92,17 +93,23 @@ export class Server extends EventDispatcher {
 		return token;
 	}
 
-	/** 获取用户信息 */
-	async get_user_info(id: string) {
-		const d: model.User = await this.get(SupportedAPI.USER_GET_INFO.replace(':id', id));
-		return d;
-	}
-
 	/** 重置密码,完成后自动登陆 */
 	async reset_password(params: API.ResetPasswordParam) {
 		const token: API.LoginToken = await this.post(SupportedAPI.USER_RESET_PASSWORD, params);
 		this.token = token;
 		return token;
+	}
+
+	/** 获取用户信息 */
+	async get_user_info(id: string) {
+		const r: model.User = await this.get(SupportedAPI.USER_GET_INFO.replace(':id', id));
+		return r;
+	}
+
+	/** 设置用户信息 */
+	async set_profile(params: API.SetProfileParam) {
+		const r: model.User = await this.post(SupportedAPI.USER_SET_PROFILE.replace(':id', this.get_user_id()));
+		return r;
 	}
 
 	/**
@@ -132,6 +139,11 @@ export class Server extends EventDispatcher {
 	get_file_url(path: string) {
 		let token = this.token ? `&token=${this.token.token}` : '';
 		return `${SupportedAPI.FILES_GET}?path=${path}${token}`;
+	}
+
+	/** 获取用户ID */
+	get_user_id(): string {
+		return this._token ? this._token.id : null;
 	}
 };
 

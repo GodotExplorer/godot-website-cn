@@ -56,6 +56,12 @@ declare namespace API {
 		verify_code: string;
 	}
 
+	interface SetProfileParam {
+		nick: string,
+		avatar: string,
+		description: string,
+	}
+
 	/** 用户登陆凭证 */
 	interface LoginToken {
 		id: string;
