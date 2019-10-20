@@ -1,6 +1,7 @@
 import { EventDispatcher } from "events/EventDispatcher";
 import axios, { AxiosRequestConfig } from 'axios';
 import * as base64url from "base64-url";
+import * as querystring from "querystring";
 
 const USER_TOKEN_STORAGE_NAME = 'user_token';
 
@@ -13,6 +14,14 @@ enum SupportedAPI {
 	USER_SET_PROFILE = '/v1/user/profile/:id',
 	FILES_UPLOAD = '/v1/files/upload',
 	FILES_GET = '/v1/files/get',
+	COMMUNITY_LIST_POSTS = '/v1/community/posts',
+	COMMUNITY_NEW_POST = '/v1/community/post/new',
+	COMMUNITY_DELETE_POST = '/v1/community/post/delete/:id',
+	COMMUNITY_POST = '/v1/community/post/:id',
+	COMMUNITY_LIST_COMMENTS = '/v1/community/comments/:id',
+	COMMUNITY_NEW_COMMENT = '/v1/community/comment/new',
+	COMMUNITY_DELETE_COMMENT = '/v1/community/comment/delete/:id',
+	COMMUNITY_COMMENT = '/v1/community/comment/:id',
 }
 
 export class Server extends EventDispatcher {
@@ -67,6 +76,9 @@ export class Server extends EventDispatcher {
 	private async get(api: SupportedAPI | string, params?: object, config?: AxiosRequestConfig) {
 		try {
 			let url: string = `${this.api_url}${api}`;
+			if (params) {
+				url += `?${querystring.stringify(params as any)}`;
+			}
 			const ret = await axios.get(url, config);
 			return ret.data || ret;
 		} catch (error) {
@@ -144,6 +156,74 @@ export class Server extends EventDispatcher {
 	/** 获取用户ID */
 	get_user_id(): string {
 		return this._token ? this._token.id : null;
+	}
+
+	/**
+	 * 获取帖子列表
+	 * @param params 列表分页配置
+	 */
+	async get_posts(params?: API.ListPostsParam) {
+		params = params || {page: 1, page_size: 10};
+		return await this.get(SupportedAPI.COMMUNITY_LIST_POSTS, params) as model.PostSeed[];
+	}
+
+	/**
+	 * 获取评论列表
+	 *
+	 * @param {API.ListCommentsParam} params
+	 * @returns
+	 * @memberof Server
+	 */
+	async get_comments(params: API.ListCommentsParam) {
+		return await this.get(SupportedAPI.COMMUNITY_LIST_COMMENTS.replace(":id", params.target), params) as model.Comment[];
+	}
+
+	/**
+	 * 获取帖子
+	 * @param id 文章ID
+	 */
+	async get_post(id: string) {
+		return await this.get(SupportedAPI.COMMUNITY_POST.replace(":id", id)) as model.Post;
+	}
+
+	/**
+	 * 更新帖子, 只能更新自己发表的帖子, 否则抛出异常
+	 * @param post 修改后的文章对象
+	 */
+	async update_post(post: model.Post) {
+		return await this.post(SupportedAPI.COMMUNITY_POST.replace(":id", post.id), post) as model.Post;
+	}
+
+	/**
+	 * 获取评论
+	 * @param id 评论ID
+	 */
+	async get_comment(id: string) {
+		return await this.get(SupportedAPI.COMMUNITY_COMMENT.replace(":id", id));
+	}
+
+	/**
+	 * 更新评论, 只能更新自己发表的评论, 否则抛出异常
+	 * @param comment 修改后的文章对象
+	 */
+	async update_comment(comment: model.Comment) {
+		return await this.post(SupportedAPI.COMMUNITY_COMMENT.replace(":id", comment.id), comment) as model.Comment;
+	}
+
+	/**
+	 * 删除帖子, 只能更新自己发表的帖子, 管理员可以删除所有人的帖子 否则抛出异常
+	 * @param id 帖子ID
+	 */
+	async delete_post(id: string) {
+		return await this.post(SupportedAPI.COMMUNITY_DELETE_POST.replace(":id", id));
+	}
+
+	/**
+	 * 删除评论, 只能更新自己发表的评论, 管理员可以删除所有人的评论 否则抛出异常
+	 * @param id 评论ID
+	 */
+	async delete_comment(id: string) {
+		return await this.post(SupportedAPI.COMMUNITY_DELETE_COMMENT.replace(":id", id));
 	}
 };
 
