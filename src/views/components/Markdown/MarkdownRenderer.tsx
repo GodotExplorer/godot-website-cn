@@ -21,16 +21,19 @@ export namespace MarkdownRenderer {
 	}
 }
 
+export function render_markdown(markdown: string): string {
+	return marked(markdown || "");
+}
+
+export async function async_render_markdown(markdown: string) {
+	return render_markdown(markdown);
+}
+
 export default class MarkdownRenderer extends React.Component<MarkdownRenderer.Props, MarkdownRenderer.State> {
-
-		render_markdown(): string {
-			return marked(this.props.content || "");
-		}
-
 		render(){
 				return(
 					<div>
-						<div dangerouslySetInnerHTML={{__html: this.render_markdown()}}></div>
+						<div dangerouslySetInnerHTML={{__html: render_markdown(this.props.content)}}></div>
 					</div>
 				);
 		}

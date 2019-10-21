@@ -6,5 +6,5 @@ build
 dist/js
 dist/assets
 yarn.lock
-thirdpart
+dist/thirdpart
 package-lock.json

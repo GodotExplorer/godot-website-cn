@@ -1,0 +1,15 @@
+* {
+  box-sizing: border-box; }
+
+.react-mde {
+  border: 1px solid #c8ccd0;
+  border-radius: 2px; }
+  .react-mde .grip {
+    border-top: 1px solid #c8ccd0;
+    background-color: #f9f9f9;
+    text-align: center;
+    height: 10px;
+    color: black;
+    cursor: s-resize; }
+    .react-mde .grip .icon {
+      height: 10px; }

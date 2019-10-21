@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { Button } from 'antd';
+import MarkdownEditor from 'views/components/Markdown/MarkdownEditor';
+
 export namespace Home {
 	export interface Props extends React.Props < void > {
 	}
@@ -13,6 +14,7 @@ export default class Home extends React.Component<Home.Props, Home.State> {
 		return (
 			<div>
 				<img src="assets/images/logo.svg" alt=""/>
+				<MarkdownEditor />
 			</div>
 		);
 	}
