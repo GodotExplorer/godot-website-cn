@@ -4,13 +4,16 @@ import * as Prism from "prismjs";
 import "./prism.css"
 
 marked.setOptions({
+	breaks: true,
+	gfm: true,
+	tables: true,
 	highlight: function (code, lang) {
 		Prism.languages['gd'] = GDScriptGrammar;
 		Prism.languages['gdscript'] = GDScriptGrammar;
 		Prism.languages['GDScript'] = GDScriptGrammar;
 		let grammar = Prism.languages[lang] || Prism.languages['markup'];
 		return Prism.highlight(code, grammar, lang);
-	}
+	},
 });
 
 export namespace MarkdownRenderer {

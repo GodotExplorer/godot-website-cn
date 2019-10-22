@@ -2,6 +2,7 @@ import * as React from "react"
 import ReactMde from "../../../thirdpart/react-mde";
 import "../../../thirdpart/react-mde/styles/react-mde-all.css";
 import { async_render_markdown } from "./MarkdownRenderer";
+import MarkdownInstuction from "./MarkdownInstuction.md";
 
 export namespace MarkdownEditor {
 	export interface Props extends React.Props < void > {
@@ -16,7 +17,7 @@ export default class MarkdownEditor extends React.Component<MarkdownEditor.Props
 
 	state: MarkdownEditor.State = {
 		content: '',
-		tab: 'help',
+		tab: 'write',
 	};
 
 	render(){
@@ -26,7 +27,7 @@ export default class MarkdownEditor extends React.Component<MarkdownEditor.Props
 				value={this.state.content}
 				onChange={(value)=> this.setState({content: value})}
 				selectedTab={this.state.tab as any}
-				helpMarkdown={"# 帮助文档"}
+				helpMarkdown={MarkdownInstuction}
 				onTabChange={(tab)=>{
 						this.setState({tab});
 					}
