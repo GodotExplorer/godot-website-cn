@@ -6,7 +6,7 @@
 	"author": "Geequlim",
 	"license": "MIT",
 	"scripts": {
-		"compile": "webpack --config webpack.config.js --env.production",
+		"compile": "node ./tools/compile.js",
 		"watch": "webpack --config webpack.config.js --watch",
 		"start-debug": "node ./tools/start.debug.js",
 		"start-release": "node ./tools/start.release.js"
