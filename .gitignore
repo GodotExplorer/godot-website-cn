@@ -8,4 +8,4 @@ dist/assets
 yarn.lock
 dist/thirdpart
 package-lock.json
-configs/config.release.json
+configs/config.release.yaml

@@ -26,14 +26,15 @@ module.exports = (env) => {
 				{test:/\.css$/,use:["style-loader","css-loader"]},
 				{ test: /\.tsx?$/, use: 'ts-loader', exclude: /node_modules/ },
 				{ test:/\.(md|txt)$/, use: "raw-loader" },
+				{ test:/\.ya?ml$/, use: [ "json-loader", "yaml-loader" ] },
 			]
 		},
 		resolve: {
-			extensions: [ '.tsx', '.ts', '.js' ],
+			extensions: [ '.tsx', '.ts', '.js', 'yaml' ],
 			plugins: [
 				new TsconfigPathsPlugin({configFile: path.join(workSpaceDir, 'tsconfig.json')})
 			],
-			alias: { config: path.join(__dirname, "configs/config." + (env.production ? "release": "debug") + ".json") }
+			alias: { config: path.join(__dirname, "configs/config." + (env.production ? "release": "debug") + ".yaml") }
 		},
 		devtool: env.production ? "" : "source-map",
 		mode: env.production ? "production" : "development",

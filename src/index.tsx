@@ -7,9 +7,8 @@ import NotFound from './views/pages/NotFound';
 import Test from 'views/pages/Test';
 
 import server from 'server/server';
-if (!window['server']) {
-	window['server'] = server;
-}
+import config from 'server/config';
+if (config.mode === "debug" && !window['server']) { window['server'] = server; }
 
 const history = createBrowserHistory();
 

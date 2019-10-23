@@ -2,6 +2,7 @@ import { EventDispatcher } from "events/EventDispatcher";
 import axios, { AxiosRequestConfig } from 'axios';
 import * as base64url from "base64-url";
 import * as querystring from "querystring";
+import config from "./config";
 
 const USER_TOKEN_STORAGE_NAME = 'user_token';
 
@@ -227,10 +228,8 @@ export class Server extends EventDispatcher {
 	}
 };
 
-const API_URL = 'http://localhost:3000';
 let server: Server = null;
 if (!server) {
-	server = new Server(API_URL);
-	window['server'] = server;
+	server = new Server(config.api);
 }
 export default server;
