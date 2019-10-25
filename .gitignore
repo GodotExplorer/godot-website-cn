@@ -4,5 +4,8 @@ node_modules
 *.log*
 build
 dist/js
+dist/assets
 yarn.lock
-thirdpart
+dist/thirdpart
+package-lock.json
+configs/config.release.yaml

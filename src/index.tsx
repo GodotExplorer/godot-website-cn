@@ -7,13 +7,11 @@ import NotFound from './views/pages/NotFound';
 import Login from './views/pages/Login';
 import ResetPass from './views/pages/ResetPass';
 import Register from './views/pages/Register';
-import server from 'server/server';
-
+import Test from 'views/pages/Test';
 import 'index.css'
-
-if (window['server']) {
-	window['server'] = server;
-}
+import server from 'server/server';
+import config from 'server/config';
+if (config.mode === "debug" && !window['server']) { window['server'] = server; }
 
 const history = createBrowserHistory();
 
@@ -24,6 +22,7 @@ ReactDOM.render(
 			<Route exact path="/login" component={Login} />
 			<Route exact path="/register" component={Register} />
 			<Route exact path="/resetPass" component={ResetPass} />
+			<Route exact path="/test" component={Test} />
 			<Route path="*" component={NotFound}/>
 		</Switch>
 	</Router>,

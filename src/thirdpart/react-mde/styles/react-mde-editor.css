@@ -1,0 +1,7 @@
+textarea.mde-text {
+  width: 100%;
+  border: 0;
+  padding: 10px;
+  vertical-align: top;
+  resize: none;
+  overflow-y: auto; }

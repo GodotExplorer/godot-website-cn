@@ -19,6 +19,35 @@ declare namespace model {
 		nick: string;
 		/** 头像 */
 		avatar: string;
+		/** 简介 */
+		description: string;
+	}
+
+	/** 文章索引 */
+	interface PostSeed extends DataModel {
+		/** 标题 */
+		title: string;
+		/** 发布者 ID */
+		publisher: string;
+		/** 标签 */
+		tags: string[];
+	}
+
+	interface Post extends PostSeed {
+		/** 内容 */
+		content: string;
+	}
+
+	/** 评论 */
+	interface Comment extends DataModel {
+		/** 内容 */
+		content: string;
+
+		/** 发布者 ID */
+		publisher: string;
+
+		/** 评论目标ID */
+		target: string;
 	}
 }
 
@@ -46,6 +75,31 @@ declare namespace API {
 		mobile_phone?: string;
 		password: string;
 	}
+
+	interface ResetPasswordParam {
+		email?: string;
+		mobile_phone?: string;
+		password: string;
+		verify_code: string;
+	}
+
+	interface SetProfileParam {
+		nick: string,
+		avatar: string,
+		description: string,
+	}
+
+	interface ListPostsParam {
+		page?: number;
+		page_size?: number;
+	}
+
+	interface ListCommentsParam {
+		target: string;
+		page?: number;
+		page_size?: number;
+	}
+
 
 	/** 用户登陆凭证 */
 	interface LoginToken {
