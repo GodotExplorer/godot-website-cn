@@ -1,15 +1,15 @@
 import * as React from 'react';
 
-export namespace ResetPass {
+export namespace PasswordRest {
   export interface Props extends React.Props < void > {}
   export interface State {}
 }
 
-export default class ResetPass extends React.Component < ResetPass.Props, ResetPass.State > {
+export default class PasswordRest extends React.Component < PasswordRest.Props, PasswordRest.State > {
 	render() {
 		return (
 			<div>
-				ResetPass
+				重置密码
 			</div>
 		);
 	}

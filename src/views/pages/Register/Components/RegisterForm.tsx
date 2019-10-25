@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Form, Icon, Input, Button, message } from 'antd';
 import { Link } from 'react-router-dom'
 import { createBrowserHistory } from 'history';
+import server from 'server/server';
 const history = createBrowserHistory();
 
 export namespace RegisterForm {
@@ -18,7 +19,7 @@ export namespace RegisterForm {
 class RegisterForm extends React.Component<RegisterForm.Props, RegisterForm.State> {
 
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       verifyLoading: false,
       submitLoading: false
@@ -27,34 +28,33 @@ class RegisterForm extends React.Component<RegisterForm.Props, RegisterForm.Stat
 
   sendVerifyCode = () => {
     const email = this.props.form.getFieldValue("email")
-    this.setState({ verifyLoading: true })
+    this.setState({ verifyLoading: true });
 
     window['server'].request_verify_code({ email }).then(res => {
-      message.success(`验证码已发送到${email}，请注意查收`)
-      this.setState({ verifyLoading: false })
+      message.success(`验证码已发送到${email}，请注意查收`);
+      this.setState({ verifyLoading: false });
     }).catch(err => {
-      this.setState({ verifyLoading: false })
-      message.error(`验证码发送失败，${err.message}`)
-    })
+      this.setState({ verifyLoading: false });
+      message.error(`验证码发送失败，${err.message}`);
+    });
   }
 
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        this.setState({ submitLoading: true })
-        // console.log(values);
-        window['server'].signup(values).then(res => {
+        this.setState({ submitLoading: true });
+        server.signup(values).then(res => {
           message.success('注册成功')
-          this.setState({ submitLoading: false })
-          history.push('/login')
+          this.setState({ submitLoading: false });
+          history.push('/login');
           console.log(res)
         }).catch(err => {
-          this.setState({ submitLoading: false })
-          message.error(`注册失败，${err.message}`)
-        })
+          this.setState({ submitLoading: false });
+          message.error(`注册失败，${err.message}`);
+        });
       }
-    })
+    });
   }
 
   render() {
@@ -117,4 +117,4 @@ class RegisterForm extends React.Component<RegisterForm.Props, RegisterForm.Stat
 
 const WrappedRegisterForm = Form.create({ name: 'registerForm' })(RegisterForm);
 
-export default WrappedRegisterForm
+export default WrappedRegisterForm;

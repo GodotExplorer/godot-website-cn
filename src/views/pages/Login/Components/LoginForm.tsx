@@ -2,6 +2,8 @@ import * as React from 'react';
 import { Form, Icon, Input, Button, Checkbox, message } from 'antd';
 import { Link } from 'react-router-dom'
 import { createBrowserHistory } from 'history';
+import server from 'server/server';
+import { is_email_address } from 'utils';
 const history = createBrowserHistory();
 
 export namespace LoginForm {
@@ -27,22 +29,29 @@ class LoginForm extends React.Component<LoginForm.Props, LoginForm.State> {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        this.setState({ loading: true })
-        window['server'].signin(values).then(res => {
-          this.setState({ loading: false })
-          message.success('登录成功')
-          history.push('/')
-          console.log(res)
+        let params: API.SigninParam = {
+          name: values.name,
+          password: values.password
+        };
+        if (is_email_address(values.name)) {
+          params.name = undefined;
+          params.email = values.name;
+        }
+        this.setState({ loading: true });
+        server.signin(params).then(res => {
+          this.setState({ loading: false });
+          message.success('登录成功');
+          history.push('/');
         }).catch(err => {
-          this.setState({ loading: false })
-          message.error(`登录失败，${err.message}`)
-        })
+          this.setState({ loading: false });
+          message.error(`登录失败，${err.message}`);
+        });
       }
-    })
+    });
   }
 
   render() {
-    const { loading } = this.state
+    const { loading } = this.state;
     const { getFieldDecorator } = this.props.form;
     return (
       <Form onSubmit={this.handleSubmit} className="login-form">
@@ -87,4 +96,4 @@ class LoginForm extends React.Component<LoginForm.Props, LoginForm.State> {
 
 const WrappedLoginForm = Form.create({ name: 'loginForm' })(LoginForm);
 
-export default WrappedLoginForm
+export default WrappedLoginForm;
