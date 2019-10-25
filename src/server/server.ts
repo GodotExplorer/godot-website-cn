@@ -28,6 +28,9 @@ enum SupportedAPI {
 export class Server extends EventDispatcher {
 	/** API 地址 */
 	readonly api_url: string;
+	/** 登陆的用户 */
+	private _user : model.User = null;
+	public get user() : model.User { return this._user; }
 
 	/** 用户登录记录 */
 	private jwt_payload: API.JWTPayload = null;
@@ -41,6 +44,11 @@ export class Server extends EventDispatcher {
 			const payload: API.JWTPayload = JSON.parse(base64url.decode(v.token.split('.')[1]));
 			if (payload.expire > (new Date()).getTime()) {
 				this.jwt_payload = payload;
+				this.get_user_info(v.id).then(user=>{
+					this._user = user;
+				}).catch(err=>{
+					console.error("获取用户信息失败", err);
+				});
 			} else {
 				v = null;
 			}

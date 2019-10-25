@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { createBrowserHistory } from 'history';
 import server from 'server/server';
 import { is_email_address } from 'utils';
+import { RouterIndex } from 'types/app';
 const history = createBrowserHistory();
 
 export namespace LoginForm {
@@ -81,13 +82,13 @@ class LoginForm extends React.Component<LoginForm.Props, LoginForm.State> {
             valuePropName: 'checked',
             initialValue: true,
           })(<Checkbox>记住我</Checkbox>)}
-          <Link className="login-form-forgot" to="/resetPass">
+          <Link className="login-form-forgot" to={RouterIndex.PASSWORD_RESET}>
             忘记密码
           </Link>
           <Button type="primary" loading={loading} htmlType="submit" className="login-form-button">
             登录
           </Button>
-          还木有账号？ <Link to="/register">马上注册</Link>
+          还木有账号？ <Link to={RouterIndex.SIGNUP}>马上注册</Link>
         </Form.Item>
       </Form>
     )

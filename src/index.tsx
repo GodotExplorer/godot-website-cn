@@ -7,25 +7,24 @@ import NotFound from './views/pages/NotFound';
 import Login from './views/pages/Login';
 import ResetPass from './views/pages/PasswordRest';
 import Register from './views/pages/Register';
-import Test from 'views/pages/Test';
 import 'index.css'
 import server from 'server/server';
 import config from 'server/config';
 import Header from 'views/components/Header';
 import Footer from 'views/components/Footer';
+import { RouterIndex, HeaderMenus } from 'types/app';
 if (config.mode === "debug" && !window['server']) { window['server'] = server; }
 
 const history = createBrowserHistory();
 
 ReactDOM.render(
 	<Router history={history}>
-		<Header/>
+		<Header items={HeaderMenus}/>
 		<Switch>
-			<Route exact path="/" component={Home} />
-			<Route exact path="/login" component={Login} />
-			<Route exact path="/register" component={Register} />
-			<Route exact path="/password_reset" component={ResetPass} />
-			<Route exact path="/test" component={Test} />
+			<Route exact path={RouterIndex.HOME} component={Home} />
+			<Route exact path={RouterIndex.SIGNIN} component={Login} />
+			<Route exact path={RouterIndex.SIGNUP} component={Register} />
+			<Route exact path={RouterIndex.PASSWORD_RESET} component={ResetPass} />
 			<Route path="*" component={NotFound}/>
 		</Switch>
 		<Footer/>

@@ -3,6 +3,7 @@ import { Form, Icon, Input, Button, message } from 'antd';
 import { Link } from 'react-router-dom'
 import { createBrowserHistory } from 'history';
 import server from 'server/server';
+import { RouterIndex } from 'types/app';
 const history = createBrowserHistory();
 
 export namespace RegisterForm {
@@ -108,7 +109,7 @@ class RegisterForm extends React.Component<RegisterForm.Props, RegisterForm.Stat
           <Button type="primary" htmlType="submit" loading={submitLoading} className="register-form-button">
             注册
           </Button>
-          已有账号？ <Link to="/login">登录</Link>
+          已有账号？ <Link to={RouterIndex.SIGNIN}>登录</Link>
         </Form.Item>
       </Form>
     )

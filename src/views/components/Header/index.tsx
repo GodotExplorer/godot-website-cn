@@ -1,8 +1,11 @@
 import * as React from "react"
 import "./style.css"
+import { Link } from "react-router-dom"
+import { MenuItem } from "types/app"
 
 export namespace Header {
 	export interface Props extends React.Props < void > {
+		items: MenuItem[]
 	}
 
 	export interface State {
@@ -24,22 +27,27 @@ export default class Header extends React.Component<Header.Props,Header.State>{
                     </div>
                     <nav id="nav">
                         <ul className="left">
-                            <li><a href="#">特性</a></li>
-                            <li><a href="#">新闻</a></li>
-                            <li><a href="#">社区</a></li>
-                            <li><a href="#">更多</a></li>
+														{
+															this.props.items.filter(item=>item.align == 'left').map(item=>
+																<li><Link to={item.path}>{item.title}</Link></li>
+															)
+														}
                         </ul>
                         <ul className="right">
-                            <li><a href="#">下载</a></li>
-                            <li><a href="#">学习</a></li>
+                            {
+															this.props.items.filter(item=>item.align == 'right').map(item=>
+																<li><Link to={item.path}>{item.title}</Link></li>
+															)
+														}
                             <li><a href="#" id="asset_lib">
                                 <img src="assets/images/asset_lib.svg"></img>
-                                </a></li>
+                                </a>
+														</li>
                         </ul>
                     </nav>
                 </div>
             </header>
-            
+
         )
     }
 }
