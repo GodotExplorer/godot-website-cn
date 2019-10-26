@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { createBrowserHistory } from 'history';
 import server from 'server/server';
 import { RouterIndex } from 'types/app';
+import VerifyCode from 'views/components/FormPage/VerifyCode';
 const history = createBrowserHistory();
 
 export namespace SignupForm {
@@ -12,7 +13,6 @@ export namespace SignupForm {
   }
 
   export interface State {
-    verifyLoading: boolean,
     submitLoading: boolean,
   }
 }
@@ -22,22 +22,8 @@ class SiginupForm extends React.Component<SignupForm.Props, SignupForm.State> {
   constructor(props) {
     super(props);
     this.state = {
-      verifyLoading: false,
       submitLoading: false
     }
-  }
-
-  sendVerifyCode = () => {
-    const email = this.props.form.getFieldValue("email")
-    this.setState({ verifyLoading: true });
-
-    window['server'].request_verify_code({ email }).then(res => {
-      message.success(`验证码已发送到${email}，请注意查收`);
-      this.setState({ verifyLoading: false });
-    }).catch(err => {
-      this.setState({ verifyLoading: false });
-      message.error(`验证码发送失败，${err.message}`);
-    });
   }
 
   handleSubmit = e => {
@@ -59,7 +45,7 @@ class SiginupForm extends React.Component<SignupForm.Props, SignupForm.State> {
   }
 
   render() {
-    const { verifyLoading, submitLoading } = this.state
+    const {submitLoading } = this.state
     const { getFieldDecorator } = this.props.form;
     return (
       <Form onSubmit={this.handleSubmit} className="register-form">
@@ -94,17 +80,7 @@ class SiginupForm extends React.Component<SignupForm.Props, SignupForm.State> {
             />,
           )}
         </Form.Item>
-        <Form.Item>
-          {getFieldDecorator('verify_code', {
-            rules: [{ required: true, message: '请输入验证码' }],
-          })(
-            <Input
-              prefix={<Icon type="code" style={{ color: 'rgba(0,0,0,.25)' }} />}
-              placeholder="请输入验证码"
-            />,
-          )}
-          <Button style={{ float: 'right' }} loading={verifyLoading} onClick={this.sendVerifyCode}>发送验证码</Button>
-        </Form.Item>
+				<VerifyCode form={this.props.form} get_email={()=>this.props.form.getFieldValue('email')}/>
         <Form.Item>
           <Button type="primary" htmlType="submit" loading={submitLoading} className="register-form-button">
             注册

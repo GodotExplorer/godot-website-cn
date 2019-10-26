@@ -22,3 +22,5 @@ export default class Register extends React.Component<Register.Props, Register.S
 		)
 	}
 }
+
+
