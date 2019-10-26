@@ -30,7 +30,7 @@ export default class UserMenu extends React.Component<IUserMenuProps, IUserMenuS
 		const title = (
 			<div>
 				<Avatar src={avatar}>
-					{avatar ? <Icon style={{margin: 3}} type="user"/> : null}
+					{avatar ? null: <Icon style={{margin: 3}} type="user"/>}
 				</Avatar>
 				<span style={{marginLeft: 3}}>
 					{nick}
