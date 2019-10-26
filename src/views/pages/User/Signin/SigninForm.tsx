@@ -7,7 +7,7 @@ import { is_email_address } from 'utils';
 import { RouterIndex } from 'types/app';
 const history = createBrowserHistory();
 
-export namespace LoginForm {
+export namespace SigninForm {
   export interface Props extends React.Props<void> {
     form: any,
   }
@@ -17,7 +17,7 @@ export namespace LoginForm {
   }
 }
 
-class LoginForm extends React.Component<LoginForm.Props, LoginForm.State> {
+class SigninForm extends React.Component<SigninForm.Props, SigninForm.State> {
 
   constructor(props) {
     super(props)
@@ -95,6 +95,6 @@ class LoginForm extends React.Component<LoginForm.Props, LoginForm.State> {
   }
 }
 
-const WrappedLoginForm = Form.create({ name: 'loginForm' })(LoginForm);
+const WrappedSigninForm = Form.create({ name: 'loginForm' })(SigninForm);
 
-export default WrappedLoginForm;
+export default WrappedSigninForm;

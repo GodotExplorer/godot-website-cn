@@ -1,2 +1,2 @@
 mode: debug
-api: https://api.godotengine.club
+api: http://localhost:3000

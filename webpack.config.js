@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const workSpaceDir = path.resolve(__dirname);
 
 /** 使用 CDN 的第三方库 */
@@ -15,7 +16,7 @@ const externals = {
 }
 
 module.exports = (env) => {
-	if (!env) { env = {production: false};}
+	if (!env) { env = {production: false, analyze: false};}
 	console.log("Compile config:", env);
 	return ({
 		entry: path.join(workSpaceDir, 'src/index.tsx'),
@@ -41,7 +42,8 @@ module.exports = (env) => {
 			new HtmlWebpackPlugin({
 				template: 'dist/index.debug.html'
 			}),
-			new webpack.HotModuleReplacementPlugin()
+			new webpack.HotModuleReplacementPlugin(),
+			env.analyze ? new BundleAnalyzerPlugin(): new webpack.DefinePlugin({}),
 		],
 		resolve: {
 			extensions: [ '.tsx', '.ts', '.js', 'yaml' ],

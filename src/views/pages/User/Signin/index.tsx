@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import LoginForm from './Components/LoginForm'
+import LoginForm from './SigninForm'
 
 import './index.styl'
 

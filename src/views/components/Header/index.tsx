@@ -3,7 +3,6 @@ import "./style.css"
 import { Link } from "react-router-dom"
 import { MenuItem, RouterIndex } from "types/app"
 import UserMenu from "./User"
-import server from "server/server"
 
 export namespace Header {
 	export interface Props extends React.Props < void > {

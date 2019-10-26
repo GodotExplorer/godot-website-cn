@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Avatar, Menu, Dropdown, Icon, message } from 'antd';
+import { Avatar, Menu, Icon, message } from 'antd';
 import server, { Events } from 'server/server';
 import { Link } from 'react-router-dom';
 import { RouterIndex } from 'types/app';
@@ -25,7 +25,7 @@ export default class UserMenu extends React.Component<IUserMenuProps, IUserMenuS
 	}
 
 	public render() {
-		const {avatar, name} = this.state.user || {};
+		const {avatar, nick} = this.state.user || {};
 
 		const title = (
 			<div>
@@ -33,7 +33,7 @@ export default class UserMenu extends React.Component<IUserMenuProps, IUserMenuS
 					{avatar ? <Icon style={{margin: 3}} type="user"/> : null}
 				</Avatar>
 				<span style={{marginLeft: 3}}>
-					{name}
+					{nick}
 				</span>
 			</div>);
 

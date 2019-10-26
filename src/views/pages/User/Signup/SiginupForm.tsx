@@ -6,7 +6,7 @@ import server from 'server/server';
 import { RouterIndex } from 'types/app';
 const history = createBrowserHistory();
 
-export namespace RegisterForm {
+export namespace SignupForm {
   export interface Props extends React.Props<void> {
     form: any,
   }
@@ -17,7 +17,7 @@ export namespace RegisterForm {
   }
 }
 
-class RegisterForm extends React.Component<RegisterForm.Props, RegisterForm.State> {
+class SiginupForm extends React.Component<SignupForm.Props, SignupForm.State> {
 
   constructor(props) {
     super(props);
@@ -116,6 +116,6 @@ class RegisterForm extends React.Component<RegisterForm.Props, RegisterForm.Stat
   }
 }
 
-const WrappedRegisterForm = Form.create({ name: 'registerForm' })(RegisterForm);
+const WrappedRegisterForm = Form.create({ name: 'registerForm' })(SiginupForm);
 
 export default WrappedRegisterForm;

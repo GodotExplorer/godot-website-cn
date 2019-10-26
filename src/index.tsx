@@ -4,9 +4,9 @@ import { Router, Route, Switch} from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import Home from './views/pages/Home';
 import NotFound from './views/pages/NotFound';
-import Login from './views/pages/Login';
-import ResetPass from './views/pages/PasswordRest';
-import Register from './views/pages/Register';
+import Login from './views/pages/User/Signin';
+import ResetPass from './views/pages/User/PasswordRest';
+import Register from './views/pages/User/Signup';
 import 'index.css'
 import server from 'server/server';
 import config from 'server/config';
