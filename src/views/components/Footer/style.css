@@ -57,7 +57,7 @@ footer .justify-space-between{
     justify-content: space-between;
 }
 
-@media screen and (max-width:900px){
+@media screen and (max-width:767px){
     footer{
         text-align: center;
     }

@@ -6,6 +6,7 @@ export enum RouterIndex {
 	CUMUNITY = '/cummunity',
 	DOWNLOAD = '/download',
 	LEARN = '/learn',
+	PROFILE = '/profile',
 }
 
 export interface MenuItem {
@@ -16,7 +17,7 @@ export interface MenuItem {
 
 export const HeaderMenus: MenuItem[] = [
 	{ title: "特性", path: RouterIndex.HOME, align: 'left' },
-	{ title: "社区", path: RouterIndex.CUMUNITY, align: 'left' },
+	{ title: "下载", path: RouterIndex.DOWNLOAD, align: 'left' },
 	{ title: "学习", path: RouterIndex.LEARN, align: 'right' },
-	{ title: "下载", path: RouterIndex.DOWNLOAD, align: 'right' },
+	{ title: "社区", path: RouterIndex.CUMUNITY, align: 'right' },
 ];

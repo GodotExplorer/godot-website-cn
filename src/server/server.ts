@@ -25,12 +25,32 @@ enum SupportedAPI {
 	COMMUNITY_COMMENT = '/v1/community/comment/:id',
 }
 
+export enum Events {
+	/** 用户登陆状态改变 */
+	USER_LOGIN_STATE_CHANGED = 'USER_STATE_CHANGED',
+}
+
 export class Server extends EventDispatcher {
 	/** API 地址 */
 	readonly api_url: string;
 	/** 登陆的用户 */
 	private _user : model.User = null;
 	public get user() : model.User { return this._user; }
+	public set user(user : model.User) {
+		if (this._user != user) {
+			this._user = user;
+			this.event(Events.USER_LOGIN_STATE_CHANGED);
+		}
+	}
+
+	store_value(key: string, value: string | object) {
+		window.localStorage.setItem(key, JSON.stringify(value));
+	}
+
+	read_value(key: string): string | object {
+		return JSON.parse(window.localStorage.getItem(key) || "null");
+	}
+
 
 	/** 用户登录记录 */
 	private jwt_payload: API.JWTPayload = null;
@@ -40,18 +60,21 @@ export class Server extends EventDispatcher {
 	public set token(v : API.LoginToken) {
 		if (v) {
 			axios.defaults.headers.common.Authorization = v.token;
-			window.localStorage.setItem(USER_TOKEN_STORAGE_NAME, JSON.stringify(v));
+			this.store_value(USER_TOKEN_STORAGE_NAME, v);
 			const payload: API.JWTPayload = JSON.parse(base64url.decode(v.token.split('.')[1]));
 			if (payload.expire > (new Date()).getTime()) {
 				this.jwt_payload = payload;
 				this.get_user_info(v.id).then(user=>{
-					this._user = user;
+					this.user = user;
 				}).catch(err=>{
 					console.error("获取用户信息失败", err);
 				});
 			} else {
 				v = null;
+				this.store_value(USER_TOKEN_STORAGE_NAME, null);
 			}
+		} else {
+			this.user = null;
 		}
 		this._token = v;
 	}
@@ -59,7 +82,7 @@ export class Server extends EventDispatcher {
 	constructor(api_url: string) {
 		super();
 		this.api_url = api_url;
-		this.token = JSON.parse(window.localStorage.getItem(USER_TOKEN_STORAGE_NAME) || 'null');
+		this.token = this.read_value(USER_TOKEN_STORAGE_NAME) as API.LoginToken;
 	}
 
 	/** 请求发送验证码 */
@@ -112,6 +135,11 @@ export class Server extends EventDispatcher {
 		const token: API.LoginToken = await this.post(SupportedAPI.USER_SIGNIN, params);
 		this.token = token;
 		return token;
+	}
+
+	async signout() {
+		this.token = null;
+		this.store_value(USER_TOKEN_STORAGE_NAME, null);
 	}
 
 	/** 重置密码,完成后自动登陆 */
