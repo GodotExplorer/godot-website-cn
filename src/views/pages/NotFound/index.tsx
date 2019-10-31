@@ -8,7 +8,7 @@ export namespace NotFound {
 export default class Home extends React.Component < NotFound.Props, NotFound.State > {
 	render() {
 		return (
-			<div>
+			<div className="page-body">
 				404 Page Not Found
 			</div>
 		);
