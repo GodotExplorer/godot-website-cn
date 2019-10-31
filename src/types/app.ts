@@ -7,6 +7,7 @@ export enum RouterIndex {
 	DOWNLOAD = '/download',
 	LEARN = '/learn',
 	PROFILE = '/profile',
+	CUMUNITY_NEW_POST = '/cummunity_new_post',
 }
 
 export interface MenuItem {

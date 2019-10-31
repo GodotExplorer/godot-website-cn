@@ -1,0 +1,7 @@
+.signin_link {
+	min-height: 260px;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}

@@ -13,11 +13,13 @@ export namespace Home {
 	}
 }
 
+import "../styles.css"
+
 export default class Home extends React.Component<Home.Props, Home.State> {
 
 	render() {
 		return (
-			<div>
+			<div className="page-body">
 				<img src="assets/images/logo.svg" alt=""/>
 				<Button>
 					<Link to={RouterIndex.SIGNUP}>注册</Link>

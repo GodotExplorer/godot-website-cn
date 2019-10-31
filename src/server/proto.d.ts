@@ -100,6 +100,11 @@ declare namespace API {
 		page_size?: number;
 	}
 
+	interface NewPostParam {
+		title: string;
+		tags: string;
+		content: string;
+	}
 
 	/** 用户登陆凭证 */
 	interface LoginToken {

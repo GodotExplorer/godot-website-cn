@@ -262,6 +262,11 @@ export class Server extends EventDispatcher {
 	async delete_comment(id: string) {
 		return await this.post(SupportedAPI.COMMUNITY_DELETE_COMMENT.replace(":id", id));
 	}
+
+	/** 发布新文章 */
+	async new_post(params: API.NewPostParam) {
+		return await this.post(SupportedAPI.COMMUNITY_NEW_POST, params);
+	}
 };
 
 let server: Server = null;
