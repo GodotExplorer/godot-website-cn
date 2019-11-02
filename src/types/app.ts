@@ -9,6 +9,7 @@ export enum RouterIndex {
 	PROFILE = '/profile',
 	COMMUNITY_NEW_POST = '/cummunity_new_post',
 	COMMUNITY_POST = '/cummunity_post/:id',
+	COMMUNITY_USER_INFO = '/cummunity_user/:id',
 }
 
 export interface MenuItem {

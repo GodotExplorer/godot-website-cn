@@ -15,8 +15,9 @@ import PasswordRest from 'views/pages/User/PasswordRest';
 import NewPost from 'views/pages/Community/NewPost';
 import CommunityPage from 'views/pages/Community';
 import PostPage from 'views/pages/Community/PostPage';
+import moment = require('moment');
 if (config.mode === "debug" && !window['server']) { window['server'] = server; }
-
+moment.locale('zh_CN');
 
 
 ReactDOM.render(

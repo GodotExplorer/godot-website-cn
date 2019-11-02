@@ -1,0 +1,7 @@
+.new_post {
+	margin: auto;
+}
+
+.new_post > div {
+	margin-top: 6px;
+}

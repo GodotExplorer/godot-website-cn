@@ -1,9 +1,13 @@
 import * as React from 'react';
-import { RouterIndex } from 'types/app';
+import { RouterIndex, history } from 'types/app';
 import { Link, RouteProps } from 'react-router-dom';
 import server from 'server/server';
-import { message } from 'antd';
+import { message, Divider, Card, Button, Tag, Icon, Spin } from 'antd';
 import * as queryString from 'query-string';
+import moment = require('moment');
+import { Loading } from 'views/components/Loading';
+
+import "./styles.css"
 
 export namespace CommunityPage {
 	export interface Props extends RouteProps {
@@ -49,23 +53,38 @@ export default class CommunityPage extends React.Component < CommunityPage.Props
 	}
 
 	render() {
+		const title = (
+			<div className="posts_header">
+				<div style={{display: 'flex', flex: 1}}/>
+				<Button type="primary" onClick={()=>history.push(RouterIndex.COMMUNITY_NEW_POST)}>
+					<Icon type="edit" />
+					发表帖子
+				</Button>
+			</div>
+		);
+
 		return (
 			<div className="page-body">
-				<Link to={RouterIndex.COMMUNITY_NEW_POST}>发表帖子</Link>
-				<ul>
-					{this.state.posts.map(p=>this.render_post_item(p))}
-				</ul>
+				<Card title={title} bordered={false}>
+					{this.state.posts.map((p, i)=>this.render_post_item(p, i))}
+					{this.state.loading ? <Loading title="加载中"/> : null}
+				</Card>
 			</div>
 		);
 	}
 
-	private render_post_item(p: model.PostSeed) {
+	private render_post_item(p: model.PostSeed, index: number) {
 		return (
-			<li key={p.id}>
-				<Link to={RouterIndex.COMMUNITY_POST.replace(":id", p.id)}>
-					{p.title}
-				</Link>
-			</li>
+			<div key={index}>
+				<h3>
+					<Link to={RouterIndex.COMMUNITY_POST.replace(":id", p.id)}>{p.title}</Link>
+				</h3>
+				<div>
+					{p.tags.map(tag=><span key={tag}><Tag>{tag}</Tag></span>)}
+					发布于 {moment(p.created_at).fromNow()}
+				</div>
+				{index < this.state.posts.length - 1 ? <Divider /> : null}
+			</div>
 		);
 	}
 }

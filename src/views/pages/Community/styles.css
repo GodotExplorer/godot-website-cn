@@ -4,5 +4,9 @@
 	margin: auto;
 	margin-top: 64px;
 }
-.page-body div {
+
+.posts_header {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-end;
 }

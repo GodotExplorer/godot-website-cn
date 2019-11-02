@@ -12,8 +12,6 @@ export namespace Home {
 	export interface State {
 	}
 }
-
-import "../styles.css"
 import FileUploadView from 'views/components/FileUpload/FileUploadView';
 
 export default class Home extends React.Component<Home.Props, Home.State> {
