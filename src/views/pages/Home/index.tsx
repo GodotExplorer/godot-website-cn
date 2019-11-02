@@ -14,6 +14,7 @@ export namespace Home {
 }
 
 import "../styles.css"
+import FileUploadView from 'views/components/FileUpload/FileUploadView';
 
 export default class Home extends React.Component<Home.Props, Home.State> {
 
@@ -27,6 +28,7 @@ export default class Home extends React.Component<Home.Props, Home.State> {
 				<Button>
 					<Link to={RouterIndex.SIGNIN}>登录</Link>
 				</Button>
+				<FileUploadView/>
 				<MarkdownEditor />
 			</div>
 		);

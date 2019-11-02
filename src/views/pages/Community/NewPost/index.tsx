@@ -30,7 +30,7 @@ export default class NewPost extends React.Component < NewPost.Props, NewPost.St
 		return (
 			<div className="page-body">
 				<div>
-					<Input ref={this.title_editor} addonBefore="标题" placeholder="请输入标题" onChange={title=>this.setState({title})}/>
+					<Input ref={this.title_editor} addonBefore="标题" placeholder="请输入标题"/>
 					<TagEditor ref={this.tag_editor} />
 					<MarkdownEditor ref={this.content_editor as any} />
 					<Button onClick={this.submit.bind(this)}>提交</Button>

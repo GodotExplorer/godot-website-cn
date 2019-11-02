@@ -185,9 +185,14 @@ export class Server extends EventDispatcher {
 	}
 
 	/** 通过服务器文件路径获取访问 URL */
-	get_file_url(path: string) {
+	get_file_url(path: string, is_public = false) {
 		let token = this.token ? `&token=${this.token.token}` : '';
-		return `${SupportedAPI.FILES_GET}?path=${path}${token}`;
+		return `${this.api_url}${SupportedAPI.FILES_GET}?path=${path}${is_public ? token: ''}`;
+	}
+
+	/** 移除文件 url 中的身份信息 */
+	get_public_file_url(url: string) {
+		return url.split('&token=')[0];
 	}
 
 	/** 获取用户ID */
