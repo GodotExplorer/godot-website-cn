@@ -206,7 +206,7 @@ export class Server extends EventDispatcher {
 	 */
 	async get_posts(params?: API.ListPostsParam) {
 		params = params || {page: 1, page_size: 10};
-		return await this.get(SupportedAPI.COMMUNITY_LIST_POSTS, params) as model.PostSeed[];
+		return await this.get(SupportedAPI.COMMUNITY_LIST_POSTS, params) as model.PostsPage;
 	}
 
 	/**

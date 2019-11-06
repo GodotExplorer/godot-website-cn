@@ -33,6 +33,12 @@ declare namespace model {
 		tags: string[];
 	}
 
+	/** 文章列表 */
+	interface PostsPage {
+		posts: PostSeed[];
+		count: number;
+	}
+
 	interface Post extends PostSeed {
 		/** 内容 */
 		content: string;

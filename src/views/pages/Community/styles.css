@@ -10,3 +10,9 @@
 	flex-direction: row;
 	align-items: flex-end;
 }
+
+.posts_pagination {
+	display: flex;
+	justify-content: center;
+	padding: 16px;
+}
